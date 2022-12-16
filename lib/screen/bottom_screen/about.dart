@@ -1,7 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../app/theme.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -11,21 +11,33 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
-  @override
-  void initState() {
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
-
-    super.initState();
-  }
+  bool isLoaded = false;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
-        child: WebView(
-          initialUrl: 'https://softwarica.edu.np/',
-          javascriptMode: JavascriptMode.unrestricted,
-        ),
+        child: Stack(children: [
+          WebView(
+            initialUrl: 'https://softwarica.edu.np/',
+            javascriptMode: JavascriptMode.unrestricted,
+            onProgress: (int progress) {
+              if (progress == 100) {
+                setState(() {
+                  isLoaded = true;
+                });
+              }
+            },
+          ),
+          Visibility(
+            visible: !isLoaded,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: HexColor.fromHex("#ED9728"),
+              ),
+            ),
+          )
+        ]),
       ),
     );
   }
