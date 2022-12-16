@@ -47,6 +47,7 @@ dependencies:
   dropdown_plus: ^0.0.9
   json_annotation: ^4.7.0
   motion_toast: ^2.6.4
+  webview_flutter: ^3.0.4
 
 dev_dependencies:
   flutter_test:

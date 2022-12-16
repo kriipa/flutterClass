@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:institute_objectbox/screen/bottom_screen/about.dart';
 
 import '../app/theme.dart';
 import 'bottom_screen/add_batch.dart';
@@ -16,6 +17,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Widget> _lstScreen = [
     const HomeScreen(),
     const AddBatchScreen(),
+    const AboutScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
             label: 'Add Batch',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.insert_chart),
+            label: 'About Screen',
           ),
         ],
         currentIndex: _selectedIndex,

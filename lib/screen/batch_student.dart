@@ -17,7 +17,6 @@ class _BatchStudentScreenState extends State<BatchStudentScreen> {
   @override
   void didChangeDependencies() {
     batchName = ModalRoute.of(context)!.settings.arguments as String;
-
     super.didChangeDependencies();
   }
 
