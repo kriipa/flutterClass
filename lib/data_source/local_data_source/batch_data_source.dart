@@ -1,15 +1,13 @@
 import 'package:institute_objectbox/helper/objectbox.dart';
 import 'package:institute_objectbox/model/batch.dart';
 import 'package:institute_objectbox/model/student.dart';
-import 'package:institute_objectbox/repository/batch_repo.dart';
 
 import '../../state/objectbox_state.dart';
 
-class BatchDataSource implements BatchRepository {
+class BatchDataSource {
   // Get the objectBox instance from state
   ObjectBoxInstance get objectBoxInstance => ObjectBoxState.objectBoxInstance!;
 
-  @override
   Future<int> addBatch(Batch batch) async {
     try {
       return objectBoxInstance.addBatch(batch);
@@ -18,7 +16,6 @@ class BatchDataSource implements BatchRepository {
     }
   }
 
-  @override
   Future<List<Batch>> getAllBatch() async {
     try {
       return Future.value(objectBoxInstance.getAllBatch());
@@ -27,7 +24,6 @@ class BatchDataSource implements BatchRepository {
     }
   }
 
-  @override
   Future<List<Student>> getStudentByBatchName(String batchName) {
     try {
       return Future.value(objectBoxInstance.getStudentByBatchName(batchName));

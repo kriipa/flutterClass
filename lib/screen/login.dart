@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:institute_objectbox/data_source/local_data_source/student_data_source.dart';
+import 'package:institute_objectbox/repository/student_repo.dart';
 import 'package:motion_toast/motion_toast.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,14 +12,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-
   final _usernameController = TextEditingController(text: 'kiran');
   final _passwordController = TextEditingController(text: 'kiran123');
 
   _login() async {
-    final a = await StudentDataSource()
+    final student = await StudentRepositoryImpl()
         .loginStudent(_usernameController.text, _passwordController.text);
-    if (a != null) {
+    if (student != null) {
       _goToAnotherPage();
     } else {
       _showMessage();

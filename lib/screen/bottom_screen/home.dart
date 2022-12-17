@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app/theme.dart';
 import '../../data_source/local_data_source/batch_data_source.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     );
                                   },
                                   child: Card(
-                                    color: Colors.amber,
+                                    color: HexColor.fromHex("#ED9728"),
                                     child: Center(
                                       child: Text(
                                         batch.batchName,
@@ -88,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 8,
                 ),
                 const Text(
-                  'Students',
+                  'Courses',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

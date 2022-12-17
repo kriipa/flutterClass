@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:institute_objectbox/data_source/local_data_source/student_data_source.dart';
 import 'package:institute_objectbox/model/student.dart';
+import 'package:institute_objectbox/repository/student_repo.dart';
 import 'package:motion_toast/motion_toast.dart';
 
 import '../data_source/local_data_source/batch_data_source.dart';
@@ -32,12 +32,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   getBatches() async {
     _lstBatches = await BatchDataSource().getAllBatch();
 
-    // For accessing each students in batches
-    for (Batch b in _lstBatches) {
-      for (var element in b.student) {
-        print('${b.batchId} ${element.fname}');
-      }
-    }
+    // // For accessing each students in batches
+    // for (Batch b in _lstBatches) {
+    //   for (var element in b.student) {
+    //     print('${b.batchId} ${element.fname}');
+    //   }
+    // }
   }
 
   _saveStudent() async {
@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // student.batch.targetId = batch.batchId;
     student.batch.target = batch;
 
-    int insert = await StudentDataSource().addStudent(student);
+    int insert = await StudentRepositoryImpl().addStudent(student);
     if (insert > 0) {
       MotionToast.success(
         description: const Text('Student added successfully'),
