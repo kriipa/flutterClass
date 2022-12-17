@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:institute_objectbox/model/student.dart';
+import 'package:institute_objectbox/repository/batch_repo.dart';
 import 'package:institute_objectbox/repository/student_repo.dart';
 import 'package:motion_toast/motion_toast.dart';
 
@@ -31,15 +32,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   getBatches() async {
     _lstBatches = await BatchDataSource().getAllBatch();
-
-    // // For accessing each students in batches
-    // for (Batch b in _lstBatches) {
-    //   for (var element in b.student) {
-    //     print('${b.batchId} ${element.fname}');
-    //   }
-    // }
   }
 
+  // for (Batch b in _lstBatches) {
+  //   for (var element in b.student) {
+  //     print('${b.batchId} ${element.fname}');
+  //   }
+  // }
   _saveStudent() async {
     Student student = Student(
       _fnameController.text,
@@ -48,14 +47,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _passwordController.text,
     );
 
+    // Get the batch object from the list of batches
     final batch = _lstBatches
         .firstWhere((element) => element.batchName == _dropDownValue);
 
     // student.batch.targetId = batch.batchId;
     student.batch.target = batch;
 
-    int insert = await StudentRepositoryImpl().addStudent(student);
-    if (insert > 0) {
+    int status = await StudentRepositoryImpl().addStudent(student);
+    _showMessage(status);
+  }
+
+  _showMessage(int status) {
+    if (status > 0) {
       MotionToast.success(
         description: const Text('Student added successfully'),
       ).show(context);
@@ -110,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 8,
                   ),
                   FutureBuilder(
-                    future: BatchDataSource().getAllBatch(),
+                    future: BatchRepositoryImpl().getAllBatch(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return DropdownButtonFormField(
@@ -124,11 +128,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: const InputDecoration(
                             labelText: 'Select Batch',
                           ),
-                          items: _lstBatches
-                              .map((batch) => DropdownMenuItem(
-                                    value: batch.batchName,
-                                    child: Text(batch.batchName),
-                                  ))
+                          items: snapshot.data!
+                              .map(
+                                (batch) => DropdownMenuItem(
+                                  value: batch.batchName,
+                                  child: Text(batch.batchName),
+                                ),
+                              )
                               .toList(),
                           onChanged: (value) {
                             _dropDownValue = value!;

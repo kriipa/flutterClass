@@ -1,6 +1,5 @@
 import 'package:institute_objectbox/model/batch.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../model/student.dart';
 import '../objectbox.g.dart';
 
@@ -17,6 +16,7 @@ class ObjectBoxInstance {
     insertBatches();
   }
 
+  // Initialization of ObjectBox
   static Future<ObjectBoxInstance> init() async {
     var dir = await getApplicationDocumentsDirectory();
     final store = Store(
@@ -27,18 +27,7 @@ class ObjectBoxInstance {
     return ObjectBoxInstance(store);
   }
 
-  // For initial data
-  void insertBatches() {
-    List<Batch> lstBatches = getAllBatch();
-    if (lstBatches.isEmpty) {
-      addBatch(Batch('29-A'));
-      addBatch(Batch('29-B'));
-      addBatch(Batch('28-A'));
-      addBatch(Batch('28-B'));
-    }
-  }
-
-  // For Batch
+  //-------------Batch Queries----------------
   int addBatch(Batch batch) {
     return _batch.put(batch);
   }
@@ -56,7 +45,20 @@ class ObjectBoxInstance {
         .student;
   }
 
-  //For Student
+  /* When app is opened for the first time,
+    insert some batches in the database
+  */
+  void insertBatches() {
+    List<Batch> lstBatches = getAllBatch();
+    if (lstBatches.isEmpty) {
+      addBatch(Batch('29-A'));
+      addBatch(Batch('29-B'));
+      addBatch(Batch('28-A'));
+      addBatch(Batch('28-B'));
+    }
+  }
+
+  //---------------- Student Queries ----------------
   int addStudent(Student student) {
     return _student.put(student);
   }

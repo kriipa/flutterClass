@@ -7,6 +7,8 @@ import '../../state/objectbox_state.dart';
 class BatchDataSource {
   // Get the objectBox instance from state
   ObjectBoxInstance get objectBoxInstance => ObjectBoxState.objectBoxInstance!;
+  // OR
+  ObjectBoxInstance objectBoxInstance2 = ObjectBoxState.objectBoxInstance!;
 
   Future<int> addBatch(Batch batch) async {
     try {
