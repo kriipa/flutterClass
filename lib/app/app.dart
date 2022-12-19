@@ -5,6 +5,8 @@ import 'package:institute_objectbox/screen/dashboard.dart';
 import 'package:institute_objectbox/screen/login.dart';
 import 'package:institute_objectbox/screen/register.dart';
 
+import '../screen/splash_screen.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -16,7 +18,8 @@ class MyApp extends StatelessWidget {
       theme: getApplicationThemeData(),
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoginScreen(),
+        '/': (context) => const SplashScreen(),
+        '/loginScreen': (context) => const LoginScreen(),
         '/registerScreen': (context) => const RegisterScreen(),
         '/dashboardScreen': (context) => const DashboardScreen(),
         '/batchStudentScreen': (context) => const BatchStudentScreen(),

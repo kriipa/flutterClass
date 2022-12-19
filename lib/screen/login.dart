@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:institute_objectbox/repository/student_repo.dart';
 import 'package:motion_toast/motion_toast.dart';
 
@@ -46,11 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    SvgPicture.asset(
-                      'assets/svg/logo.svg',
-                      height: 200,
-                      width: 200,
-                    ),
+                    // SvgPicture.asset(
+                    //   'assets/svg/logo.svg',
+                    //   height: 200,
+                    //   width: 200,
+                    // ),
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _usernameController,
@@ -88,12 +87,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        // backgroundColor: Colors.green[400],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                      ),
+                      // style: ElevatedButton.styleFrom(
+                      //   backgroundColor: Colors.green[400],
+                      //   shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.circular(30.0),
+                      //   ),
+                      // ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _login();
@@ -114,11 +113,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                      ),
+                      // style: ElevatedButton.styleFrom(
+                      //   shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.circular(30.0),
+                      //   ),
+                      // ),
                       onPressed: () {
                         Navigator.pushNamed(context, '/registerScreen');
                       },
