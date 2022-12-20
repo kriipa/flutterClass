@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'login.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  static const String route = "splashScreen";
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -10,8 +14,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushNamed(context, '/loginScreen');
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, LoginScreen.route);
     });
     super.initState();
   }

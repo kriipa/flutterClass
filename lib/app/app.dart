@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:institute_objectbox/app/routes.dart';
 import 'package:institute_objectbox/app/theme.dart';
-import 'package:institute_objectbox/screen/batch_student.dart';
-import 'package:institute_objectbox/screen/dashboard.dart';
-import 'package:institute_objectbox/screen/login.dart';
-import 'package:institute_objectbox/screen/register.dart';
 
 import '../screen/splash_screen.dart';
 
@@ -16,14 +13,8 @@ class MyApp extends StatelessWidget {
       title: 'Student course ObjectBox',
       debugShowCheckedModeBanner: false,
       theme: getApplicationThemeData(),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreen(),
-        '/loginScreen': (context) => const LoginScreen(),
-        '/registerScreen': (context) => const RegisterScreen(),
-        '/dashboardScreen': (context) => const DashboardScreen(),
-        '/batchStudentScreen': (context) => const BatchStudentScreen(),
-      },
+      initialRoute: SplashScreen.route,
+      routes: getAppRoutes,
     );
   }
 }

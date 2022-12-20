@@ -12,29 +12,17 @@ ThemeData getApplicationThemeData() {
       buttonColor: HexColor.fromHex("#ED9728"),
       splashColor: HexColor.fromHex("#B3ED9728"),
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       centerTitle: true,
-      color: Colors.yellow,
+      color: HexColor.fromHex("#ED9728"),
       elevation: 4,
-      shadowColor: Colors.black,
-      titleTextStyle: TextStyle(
+      shadowColor: HexColor.fromHex("#B3ED9728"),
+      titleTextStyle: const TextStyle(
         fontSize: 16,
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
+        color: Colors.white,
+        fontWeight: FontWeight.w400,
       ),
     ),
-
-    //  appBarTheme: AppBarTheme(
-    //   centerTitle: true,
-    //   color: HexColor.fromHex("#ED9728"),
-    //   elevation: 4,
-    //   shadowColor: HexColor.fromHex("#B3ED9728"),
-    //   titleTextStyle: const TextStyle(
-    //     fontSize: 16,
-    //     color: Colors.white,
-    //     fontWeight: FontWeight.w400,
-    //   ),
-    // ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: const TextStyle(

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:institute_objectbox/repository/student_repo.dart';
+import 'package:institute_objectbox/screen/register.dart';
 import 'package:motion_toast/motion_toast.dart';
+
+import 'dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  static const String route = "loginScreen";
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -25,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _goToAnotherPage() {
-    Navigator.pushNamed(context, '/dashboardScreen');
+    Navigator.pushNamed(context, DashboardScreen.route);
   }
 
   _showMessage() {
@@ -45,11 +51,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    // SvgPicture.asset(
-                    //   'assets/svg/logo.svg',
-                    //   height: 200,
-                    //   width: 200,
-                    // ),
+                    SvgPicture.asset(
+                      'assets/svg/logo.svg',
+                      height: 200,
+                      width: 200,
+                    ),
                     const SizedBox(height: 8),
                     TextFormField(
                       controller: _usernameController,
@@ -119,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       //   ),
                       // ),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/registerScreen');
+                        Navigator.pushNamed(context, RegisterScreen.route);
                       },
                       child: const SizedBox(
                         height: 50,

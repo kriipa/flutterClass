@@ -10,6 +10,8 @@ import '../model/batch.dart';
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
+  static String route = "registerScreen";
+
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }

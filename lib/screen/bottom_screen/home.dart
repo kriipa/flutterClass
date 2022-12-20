@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:institute_objectbox/screen/batch_student.dart';
 
 import '../../app/theme.dart';
 import '../../data_source/local_data_source/batch_data_source.dart';
@@ -57,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      '/batchStudentScreen',
+                                      BatchStudentScreen.route,
                                       arguments: batch.batchName,
                                     );
                                   },
