@@ -5,7 +5,7 @@ import '../model/student.dart';
 
 class BatchStudentScreen extends StatefulWidget {
   const BatchStudentScreen({super.key});
-  static String route = "batchStudentScreen";
+  static const String route = "batchStudentScreen";
   @override
   State<BatchStudentScreen> createState() => _BatchStudentScreenState();
 }

@@ -8,7 +8,7 @@ import 'bottom_screen/home.dart';
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
-  static String route = "dashboardScreen";
+  static const String route = "dashboardScreen";
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();

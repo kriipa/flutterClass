@@ -1,3 +1,4 @@
+import 'package:institute_objectbox/model/student.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -6,5 +7,13 @@ class Course {
   int courseId;
   String courseName;
 
+  @Backlink()
+  final student = ToMany<Student>();
+
   Course(this.courseName, {this.courseId = 0});
+
+  @override
+  String toString() {
+    return 'CourseId : $courseId , CourseName : $courseName';
+  }
 }

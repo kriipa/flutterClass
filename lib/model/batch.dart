@@ -1,6 +1,7 @@
 import 'package:institute_objectbox/model/student.dart';
 import 'package:objectbox/objectbox.dart';
 
+//flutter pub run build_runner build  --delete-conflicting-outputs
 @Entity()
 class Batch {
   @Id(assignable: true)
@@ -13,7 +14,3 @@ class Batch {
   //Constructor
   Batch(this.batchName, {this.batchId = 0});
 }
-
-
-
-//flutter pub run build_runner build  --delete-conflicting-outputs

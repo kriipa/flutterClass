@@ -81,12 +81,18 @@
           "type": 9
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "3:538160186850696982",
+          "name": "course",
+          "targetId": "2:5048566223041025778"
+        }
+      ]
     }
   ],
   "lastEntityId": "3:8308014377577410811",
   "lastIndexId": "1:2454483955128625537",
-  "lastRelationId": "2:5275283626452299021",
+  "lastRelationId": "3:538160186850696982",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

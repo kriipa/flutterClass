@@ -60,7 +60,9 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
+      backlinks: <ModelBacklink>[
+        ModelBacklink(name: 'student', srcEntity: 'Student', srcField: '')
+      ]),
   ModelEntity(
       id: const IdUid(3, 8308014377577410811),
       name: 'Student',
@@ -100,7 +102,12 @@ final _entities = <ModelEntity>[
             type: 9,
             flags: 0)
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(3, 538160186850696982),
+            name: 'course',
+            targetId: const IdUid(2, 5048566223041025778))
+      ],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -126,7 +133,7 @@ ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const IdUid(3, 8308014377577410811),
       lastIndexId: const IdUid(1, 2454483955128625537),
-      lastRelationId: const IdUid(2, 5275283626452299021),
+      lastRelationId: const IdUid(3, 538160186850696982),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
@@ -176,7 +183,10 @@ ModelDefinition getObjectBoxModel() {
     Course: EntityDefinition<Course>(
         model: _entities[1],
         toOneRelations: (Course object) => [],
-        toManyRelations: (Course object) => {},
+        toManyRelations: (Course object) => {
+              RelInfo<Student>.toManyBacklink(3, object.courseId):
+                  object.student
+            },
         getId: (Course object) => object.courseId,
         setId: (Course object, int id) {
           object.courseId = id;
@@ -198,13 +208,18 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 6, ''),
               courseId:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
-
+          InternalToManyAccess.setRelInfo(
+              object.student,
+              store,
+              RelInfo<Student>.toManyBacklink(3, object.courseId),
+              store.box<Course>());
           return object;
         }),
     Student: EntityDefinition<Student>(
         model: _entities[2],
         toOneRelations: (Student object) => [object.batch],
-        toManyRelations: (Student object) => {},
+        toManyRelations: (Student object) =>
+            {RelInfo<Student>.toMany(3, object.stdId): object.course},
         getId: (Student object) => object.stdId,
         setId: (Student object, int id) {
           object.stdId = id;
@@ -242,6 +257,8 @@ ModelDefinition getObjectBoxModel() {
           object.batch.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.batch.attach(store);
+          InternalToManyAccess.setRelInfo(object.course, store,
+              RelInfo<Student>.toMany(3, object.stdId), store.box<Student>());
           return object;
         })
   };
@@ -294,4 +311,8 @@ class Student_ {
 
   /// see [Student.lname]
   static final lname = QueryStringProperty<Student>(_entities[2].properties[5]);
+
+  /// see [Student.course]
+  static final course =
+      QueryRelationToMany<Student, Course>(_entities[2].relations[0]);
 }

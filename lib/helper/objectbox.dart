@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:institute_objectbox/model/batch.dart';
+import 'package:institute_objectbox/model/course.dart';
 import 'package:path_provider/path_provider.dart';
 import '../model/student.dart';
 import '../objectbox.g.dart';
@@ -7,13 +10,14 @@ class ObjectBoxInstance {
   late final Store _store;
   late final Box<Batch> _batch;
   late final Box<Student> _student;
-
+  late final Box<Course> _course;
   // Constructor
   ObjectBoxInstance(this._store) {
     _batch = Box<Batch>(_store);
     _student = Box<Student>(_store);
-
+    _course = Box<Course>(_store);
     insertBatches();
+    insertCourses();
   }
 
   // Initialization of ObjectBox
@@ -25,6 +29,12 @@ class ObjectBoxInstance {
     );
 
     return ObjectBoxInstance(store);
+  }
+
+  // Delete Store and all boxes
+  static Future<void> deleteDatabase() async {
+    var dir = await getApplicationDocumentsDirectory();
+    Directory('${dir.path}/student_course').deleteSync(recursive: true);
   }
 
   //-------------Batch Queries----------------
@@ -58,6 +68,21 @@ class ObjectBoxInstance {
     }
   }
 
+  /*
+    When app is opened for the first time,
+    insert some course in the database
+  */
+  void insertCourses() {
+    List<Course> lstCourses = getAllCourse();
+    if (lstCourses.isEmpty) {
+      addCourse(Course('Flutter'));
+      addCourse(Course('Web Api'));
+      addCourse(Course('Dart'));
+      addCourse(Course('Java'));
+      addCourse(Course('Python'));
+    }
+  }
+
   //---------------- Student Queries ----------------
   int addStudent(Student student) {
     return _student.put(student);
@@ -74,5 +99,35 @@ class ObjectBoxInstance {
             Student_.password.equals(password))
         .build()
         .findFirst();
+  }
+
+  //---------------- Course Queries ----------------
+  int addCourse(Course course) {
+    return _course.put(course);
+  }
+
+  List<Course> getAllCourse() {
+    return _course.getAll();
+  }
+
+  // Search course by courseName
+  Course? getCourseByCourseName(String courseName) {
+    return _course
+        .query(Course_.courseName.equals(courseName))
+        .build()
+        .findFirst();
+  }
+
+  // Get students in each course
+  List<Student> getStudentsInEachCourse(String courseName) {
+    // return _course
+    //     .query(Course_.courseName.equals(courseName))
+    //     .build()
+    //     .findFirst()!
+    //     .student;
+
+    //OR
+
+    return getCourseByCourseName(courseName)!.student;
   }
 }

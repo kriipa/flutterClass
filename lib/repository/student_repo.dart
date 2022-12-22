@@ -1,6 +1,5 @@
 import 'package:institute_objectbox/data_source/local_data_source/student_data_source.dart';
-
-import '../model/student.dart';
+import 'package:institute_objectbox/model/student.dart';
 
 abstract class StudentRepository {
   Future<List<Student>> getStudents();

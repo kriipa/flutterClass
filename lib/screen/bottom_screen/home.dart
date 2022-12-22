@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:institute_objectbox/repository/course_repository.dart';
 import 'package:institute_objectbox/screen/batch_student.dart';
 
 import '../../app/theme.dart';
@@ -24,80 +25,125 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Home Screen'),
         elevation: 5,
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'Batches',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                'Batches',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 8),
-                Container(
-                  height: MediaQuery.of(context).size.height * .3,
-                  color: Colors.grey[200],
-                  child: Expanded(
-                    child: FutureBuilder(
-                      future: BatchDataSource().getAllBatch(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return GridView.count(
-                            childAspectRatio: 3 / 2,
-                            crossAxisCount: 2,
-                            children: [
-                              //Get data from snapshot
-                              for (var batch in snapshot.data!)
-                                InkWell(
-                                  splashColor: Colors.red,
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      BatchStudentScreen.route,
-                                      arguments: batch.batchName,
-                                    );
-                                  },
-                                  child: Card(
-                                    color: HexColor.fromHex("#ED9728"),
-                                    child: Center(
-                                      child: Text(
-                                        batch.batchName,
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                height: MediaQuery.of(context).size.height * .3,
+                color: Colors.grey[200],
+                child: Expanded(
+                  child: FutureBuilder(
+                    future: BatchDataSource().getAllBatch(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return GridView.count(
+                          childAspectRatio: 3 / 2,
+                          crossAxisCount: 2,
+                          children: [
+                            //Get data from snapshot
+                            for (var batch in snapshot.data!)
+                              InkWell(
+                                splashColor: Colors.red,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    BatchStudentScreen.route,
+                                    arguments: batch.batchName,
+                                  );
+                                },
+                                child: Card(
+                                  color: HexColor.fromHex("#ED9728"),
+                                  child: Center(
+                                    child: Text(
+                                      batch.batchName,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
                                 ),
-                            ],
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                    ),
+                              ),
+                          ],
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const Text(
+                'Courses',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                const Text(
-                  'Courses',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * .3,
+                color: Colors.grey[200],
+                child: Expanded(
+                  child: FutureBuilder(
+                    future: CourseRepositoryImpl().getAllCourse(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return GridView.count(
+                          childAspectRatio: 3 / 2,
+                          crossAxisCount: 2,
+                          children: [
+                            //Get data from snapshot
+                            for (var course in snapshot.data!)
+                              InkWell(
+                                splashColor: Colors.red,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    BatchStudentScreen.route,
+                                    arguments: course.courseName,
+                                  );
+                                },
+                                child: Card(
+                                  color: HexColor.fromHex("#ED9728"),
+                                  child: Center(
+                                    child: Text(
+                                      course.courseName,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

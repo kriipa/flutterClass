@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:institute_objectbox/model/course.dart';
 import 'package:institute_objectbox/model/student.dart';
 import 'package:institute_objectbox/repository/batch_repo.dart';
+import 'package:institute_objectbox/repository/course_repository.dart';
 import 'package:institute_objectbox/repository/student_repo.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-import '../data_source/local_data_source/batch_data_source.dart';
 import '../model/batch.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
-  static String route = "registerScreen";
+  static const String route = "registerScreen";
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -18,6 +20,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   List<Batch> _lstBatches = [];
+  List<Course> _lstCourses = [];
+  final List<String> _selectedItems = [];
+  final _gap = const SizedBox(height: 8);
   String _dropDownValue = "";
 
   final _key = GlobalKey<FormState>();
@@ -28,19 +33,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    getBatches();
+    _getBatches();
+    _getCourses();
     super.initState();
   }
 
-  getBatches() async {
-    _lstBatches = await BatchDataSource().getAllBatch();
+  _getBatches() async {
+    _lstBatches = await BatchRepositoryImpl().getAllBatch();
   }
 
-  // for (Batch b in _lstBatches) {
-  //   for (var element in b.student) {
-  //     print('${b.batchId} ${element.fname}');
-  //   }
-  // }
+  _getCourses() async {
+    _lstCourses = await CourseRepositoryImpl().getAllCourse();
+  }
+
   _saveStudent() async {
     Student student = Student(
       _fnameController.text,
@@ -71,6 +76,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  List<Course> _lstCourseTemp = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     }),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  _gap,
                   TextFormField(
                     controller: _lnameController,
                     decoration: const InputDecoration(
@@ -112,9 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     }),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  _gap,
                   FutureBuilder(
                     future: BatchRepositoryImpl().getAllBatch(),
                     builder: (context, snapshot) {
@@ -149,9 +152,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 8,
+                  _gap,
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Select Courses',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
+                  _gap,
+                  MultiSelectDialogField(
+                    title: const Text('Select course'),
+                    items: _lstCourses
+                        .map((course) =>
+                            MultiSelectItem(course, course.courseName))
+                        .toList(),
+                    listType: MultiSelectListType.CHIP,
+                    buttonText: const Text('Select course'),
+                    onConfirm: (values) {
+                      _lstCourseTemp = values;
+                      debugPrint(
+                          '${values.toString()} , length ${_lstCourseTemp.length}');
+                    },
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    validator: ((value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select course';
+                      }
+                      return null;
+                    }),
+                  ),
+                  _gap,
+                  // Checkbox
                   TextFormField(
                     controller: _usernameController,
                     decoration: const InputDecoration(
@@ -164,9 +205,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     }),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  _gap,
+
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
@@ -180,9 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     }),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  _gap,
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

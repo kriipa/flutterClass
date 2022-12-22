@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
-
-import '../screen/batch_student.dart';
-import '../screen/dashboard.dart';
-import '../screen/login.dart';
-import '../screen/register.dart';
-import '../screen/splash_screen.dart';
+import 'package:institute_objectbox/screen/batch_student.dart';
+import 'package:institute_objectbox/screen/dashboard.dart';
+import 'package:institute_objectbox/screen/login.dart';
+import 'package:institute_objectbox/screen/register.dart';
+import 'package:institute_objectbox/screen/splash_screen.dart';
 
 var getAppRoutes = <String, WidgetBuilder>{
   SplashScreen.route: (context) => const SplashScreen(),
