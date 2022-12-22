@@ -11,9 +11,4 @@ class Course {
   final student = ToMany<Student>();
 
   Course(this.courseName, {this.courseId = 0});
-
-  @override
-  String toString() {
-    return 'CourseId : $courseId , CourseName : $courseName';
-  }
 }

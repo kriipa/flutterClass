@@ -20,8 +20,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   List<Batch> _lstBatches = [];
-  List<Course> _lstCourses = [];
-  final List<String> _selectedItems = [];
+  List<Course> _lstCourseSelected = [];
+
   final _gap = const SizedBox(height: 8);
   String _dropDownValue = "";
 
@@ -34,16 +34,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     _getBatches();
-    _getCourses();
     super.initState();
   }
 
   _getBatches() async {
     _lstBatches = await BatchRepositoryImpl().getAllBatch();
-  }
-
-  _getCourses() async {
-    _lstCourses = await CourseRepositoryImpl().getAllCourse();
   }
 
   _saveStudent() async {
@@ -60,9 +55,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     // student.batch.targetId = batch.batchId;
     student.batch.target = batch;
+    // Insert all the course instance in Student Box
+    for (Course c in _lstCourseSelected) {
+      student.course.add(c);
+    }
 
     int status = await StudentRepositoryImpl().addStudent(student);
+    _showStudentCourse();
     _showMessage(status);
+  }
+
+  _showStudentCourse() async {
+    List<Student> lstStudent = await StudentRepositoryImpl().getStudents();
+    for (Student s in lstStudent) {
+      debugPrint(s.fname);
+      for (Course c in s.course) {
+        debugPrint(c.courseName);
+      }
+    }
   }
 
   _showMessage(int status) {
@@ -75,8 +85,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           .show(context);
     }
   }
-
-  List<Course> _lstCourseTemp = [];
 
   @override
   Widget build(BuildContext context) {
@@ -165,12 +173,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   _gap,
                   FutureBuilder(
-                    future: BatchRepositoryImpl().getAllBatch(),
+                    future: CourseRepositoryImpl().getAllCourse(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return MultiSelectDialogField(
                           title: const Text('Select course'),
-                          items: _lstCourses
+                          items: snapshot.data!
                               .map((course) =>
                                   MultiSelectItem(course, course.courseName))
                               .toList(),
@@ -178,9 +186,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           buttonText: const Text('Select course'),
                           buttonIcon: const Icon(Icons.search),
                           onConfirm: (values) {
-                            _lstCourseTemp = values;
-                            debugPrint(
-                                '${values.toString()} , length ${_lstCourseTemp.length}');
+                            _lstCourseSelected = values;
                           },
                           decoration: BoxDecoration(
                             border: Border.all(
@@ -205,6 +211,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
 
                   _gap,
+                  // MultiSelectDialogField(
+                  //   title: const Text('Select course'),
+                  //   items: _lstCourses
+                  //       .map((course) =>
+                  //           MultiSelectItem(course, course.courseName))
+                  //       .toList(),
+                  //   listType: MultiSelectListType.CHIP,
+                  //   buttonText: const Text('Select course'),
+                  //   buttonIcon: const Icon(Icons.search),
+                  //   onConfirm: (values) {
+                  //     _lstCourseSelected = values;
+                  //     debugPrint(
+                  //         '${values.toString()} , length ${_lstCourseSelected.length}');
+                  //   },
+                  //   decoration: BoxDecoration(
+                  //     border: Border.all(
+                  //       color: Colors.grey,
+                  //       width: 1,
+                  //     ),
+                  //     borderRadius: BorderRadius.circular(5),
+                  //   ),
+                  //   validator: ((value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please select course';
+                  //     }
+                  //     return null;
+                  //   }),
+                  // ),
+                  //   _gap,
                   // Checkbox
                   TextFormField(
                     controller: _usernameController,
