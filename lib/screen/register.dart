@@ -164,33 +164,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   _gap,
-                  MultiSelectDialogField(
-                    title: const Text('Select course'),
-                    items: _lstCourses
-                        .map((course) =>
-                            MultiSelectItem(course, course.courseName))
-                        .toList(),
-                    listType: MultiSelectListType.CHIP,
-                    buttonText: const Text('Select course'),
-                    onConfirm: (values) {
-                      _lstCourseTemp = values;
-                      debugPrint(
-                          '${values.toString()} , length ${_lstCourseTemp.length}');
-                    },
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    validator: ((value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please select course';
+                  FutureBuilder(
+                    future: BatchRepositoryImpl().getAllBatch(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return MultiSelectDialogField(
+                          title: const Text('Select course'),
+                          items: _lstCourses
+                              .map((course) =>
+                                  MultiSelectItem(course, course.courseName))
+                              .toList(),
+                          listType: MultiSelectListType.CHIP,
+                          buttonText: const Text('Select course'),
+                          buttonIcon: const Icon(Icons.search),
+                          onConfirm: (values) {
+                            _lstCourseTemp = values;
+                            debugPrint(
+                                '${values.toString()} , length ${_lstCourseTemp.length}');
+                          },
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          validator: ((value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select course';
+                            }
+                            return null;
+                          }),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
-                      return null;
-                    }),
+                    },
                   ),
+
                   _gap,
                   // Checkbox
                   TextFormField(
