@@ -21,7 +21,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   List<Batch> _lstBatches = [];
   List<Course> _lstCourseSelected = [];
-
+  final List<Course> _lstCourse = [];
   final _gap = const SizedBox(height: 8);
   String _dropDownValue = "";
 
@@ -239,7 +239,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   //     return null;
                   //   }),
                   // ),
-                  //   _gap,
+                  // _gap,
                   // Checkbox
                   TextFormField(
                     controller: _usernameController,

@@ -6,8 +6,9 @@ import 'helper/objectbox.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  //await ObjectBoxInstance.deleteDatabase();
   // Create an Object for ObjectBoxInstance
-  await ObjectBoxInstance.deleteDatabase();
   ObjectBoxState.objectBoxInstance = await ObjectBoxInstance.init();
 
   // Disable landscape mode
