@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  final _gap = const SizedBox(height: 8);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,57 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 8),
-              Container(
-                height: MediaQuery.of(context).size.height * .3,
-                color: Colors.grey[200],
-                child: Expanded(
-                  child: FutureBuilder(
-                    future: BatchDataSource().getAllBatch(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return GridView.count(
-                          childAspectRatio: 3 / 2,
-                          crossAxisCount: 2,
-                          children: [
-                            //Get data from snapshot
-                            for (var batch in snapshot.data!)
-                              InkWell(
-                                splashColor: Colors.red,
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    BatchStudentScreen.route,
-                                    arguments: batch.batchName,
-                                  );
-                                },
-                                child: Card(
-                                  color: HexColor.fromHex("#ED9728"),
-                                  child: Center(
-                                    child: Text(
-                                      batch.batchName,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
+              _gap,
+              const DisplayBatches(),
+              _gap,
               const Text(
                 'Courses',
                 style: TextStyle(
@@ -96,55 +49,123 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * .3,
-                color: Colors.grey[200],
-                child: Expanded(
-                  child: FutureBuilder(
-                    future: CourseRepositoryImpl().getAllCourse(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return GridView.count(
-                          childAspectRatio: 3 / 2,
-                          crossAxisCount: 2,
-                          children: [
-                            //Get data from snapshot
-                            for (var course in snapshot.data!)
-                              InkWell(
-                                splashColor: Colors.red,
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    BatchStudentScreen.route,
-                                    arguments: course.courseName,
-                                  );
-                                },
-                                child: Card(
-                                  color: HexColor.fromHex("#ED9728"),
-                                  child: Center(
-                                    child: Text(
-                                      course.courseName,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ),
+              const DisplayCourses(),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class DisplayCourses extends StatelessWidget {
+  const DisplayCourses({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * .3,
+      color: Colors.grey[200],
+      child: Expanded(
+        child: FutureBuilder(
+          future: CourseRepositoryImpl().getAllCourse(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return GridView.count(
+                childAspectRatio: 3 / 2,
+                crossAxisCount: 2,
+                children: [
+                  //Get data from snapshot
+                  for (var course in snapshot.data!)
+                    InkWell(
+                      splashColor: Colors.red,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          BatchStudentScreen.route,
+                          arguments: course.courseName,
+                        );
+                      },
+                      child: Card(
+                        color: HexColor.fromHex("#ED9728"),
+                        child: Center(
+                          child: Text(
+                            course.courseName,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class DisplayBatches extends StatelessWidget {
+  const DisplayBatches({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * .3,
+      color: Colors.grey[200],
+      child: Expanded(
+        child: FutureBuilder(
+          future: BatchDataSource().getAllBatch(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return GridView.count(
+                childAspectRatio: 3 / 2,
+                crossAxisCount: 2,
+                children: [
+                  //Get data from snapshot
+                  for (var batch in snapshot.data!)
+                    InkWell(
+                      splashColor: Colors.red,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          BatchStudentScreen.route,
+                          arguments: batch.batchName,
+                        );
+                      },
+                      child: Card(
+                        color: HexColor.fromHex("#ED9728"),
+                        child: Center(
+                          child: Text(
+                            batch.batchName,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
       ),
     );

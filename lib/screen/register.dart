@@ -23,7 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   List<Course> _lstCourseSelected = [];
   final List<Course> _lstCourse = [];
   final _gap = const SizedBox(height: 8);
-  String _dropDownValue = "";
+  Batch? _dropDownValue;
 
   final _key = GlobalKey<FormState>();
   final _fnameController = TextEditingController(text: 'Kiran');
@@ -43,18 +43,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   _saveStudent() async {
     Student student = Student(
+      1,
       _fnameController.text,
       _lnameController.text,
       _usernameController.text,
       _passwordController.text,
     );
 
-    // Get the batch object from the list of batches
-    final batch = _lstBatches
-        .firstWhere((element) => element.batchName == _dropDownValue);
+    // // Get the batch object from the list of batches
+    // final batch = _lstBatches
+    //     .firstWhere((element) => element.batchName == _dropDownValue);
 
     // student.batch.targetId = batch.batchId;
-    student.batch.target = batch;
+    student.batch.target = _dropDownValue;
+
     // Insert all the course instance in Student Box
     for (Course c in _lstCourseSelected) {
       student.course.add(c);
@@ -132,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (snapshot.hasData) {
                         return DropdownButtonFormField(
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null) {
                               return 'Please select batch';
                             }
                             return null;
@@ -144,7 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           items: snapshot.data!
                               .map(
                                 (batch) => DropdownMenuItem(
-                                  value: batch.batchName,
+                                  value: batch,
                                   child: Text(batch.batchName),
                                 ),
                               )
@@ -179,8 +181,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         return MultiSelectDialogField(
                           title: const Text('Select course'),
                           items: snapshot.data!
-                              .map((course) =>
-                                  MultiSelectItem(course, course.courseName))
+                              .map((course) => MultiSelectItem(
+                                    course,
+                                    course.courseName,
+                                  ))
                               .toList(),
                           listType: MultiSelectListType.CHIP,
                           buttonText: const Text('Select course'),
@@ -209,38 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                   ),
-
                   _gap,
-                  // MultiSelectDialogField(
-                  //   title: const Text('Select course'),
-                  //   items: _lstCourses
-                  //       .map((course) =>
-                  //           MultiSelectItem(course, course.courseName))
-                  //       .toList(),
-                  //   listType: MultiSelectListType.CHIP,
-                  //   buttonText: const Text('Select course'),
-                  //   buttonIcon: const Icon(Icons.search),
-                  //   onConfirm: (values) {
-                  //     _lstCourseSelected = values;
-                  //     debugPrint(
-                  //         '${values.toString()} , length ${_lstCourseSelected.length}');
-                  //   },
-                  //   decoration: BoxDecoration(
-                  //     border: Border.all(
-                  //       color: Colors.grey,
-                  //       width: 1,
-                  //     ),
-                  //     borderRadius: BorderRadius.circular(5),
-                  //   ),
-                  //   validator: ((value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'Please select course';
-                  //     }
-                  //     return null;
-                  //   }),
-                  // ),
-                  // _gap,
-                  // Checkbox
                   TextFormField(
                     controller: _usernameController,
                     decoration: const InputDecoration(
@@ -254,7 +227,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }),
                   ),
                   _gap,
-
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,

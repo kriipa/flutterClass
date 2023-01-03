@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:institute_objectbox/model/batch.dart';
 import 'package:institute_objectbox/model/course.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,8 +17,9 @@ class ObjectBoxInstance {
     _batch = Box<Batch>(_store);
     _student = Box<Student>(_store);
     _course = Box<Course>(_store);
-    insertBatches();
-    insertCourses();
+    // insertBatches();
+    // insertCourses();
+    // checkManyToMany();
   }
 
   // Initialization of ObjectBox
@@ -35,6 +37,32 @@ class ObjectBoxInstance {
   static Future<void> deleteDatabase() async {
     var dir = await getApplicationDocumentsDirectory();
     Directory('${dir.path}/student_course').deleteSync(recursive: true);
+  }
+
+  void checkManyToMany() {
+    var courses = getAllCourse();
+    var student = getAllStudent();
+
+    // get all students from each course
+    for (var course in courses) {
+      debugPrint('Course Name: ${course.courseName}');
+      for (var student in course.student) {
+        debugPrint('Student Name: ${student.fname}');
+      }
+    }
+
+    // get all courses from each students
+    for (var student in student) {
+      debugPrint('Student Name: ${student.fname}');
+      for (var course in student.course) {
+        debugPrint('Course Name: ${course.courseName}');
+      }
+    }
+
+    // // add student in course
+    // var course = getCourseByCourseName('Flutter');
+    // var student1 = getStudentByBatchName('29-A').first;
+    // course!.student.add(student1);
   }
 
   //-------------Batch Queries----------------
@@ -61,10 +89,12 @@ class ObjectBoxInstance {
   void insertBatches() {
     List<Batch> lstBatches = getAllBatch();
     if (lstBatches.isEmpty) {
-      addBatch(Batch('29-A'));
-      addBatch(Batch('29-B'));
-      addBatch(Batch('28-A'));
-      addBatch(Batch('28-B'));
+      // addBatch(Batch('29-A'));
+      addBatch(Batch(1, '29-A'));
+      addBatch(Batch(2, '29-B'));
+      // addBatch(Batch('29-B'));
+      // addBatch(Batch('28-A'));
+      // addBatch(Batch('28-B'));
     }
   }
 
@@ -75,11 +105,13 @@ class ObjectBoxInstance {
   void insertCourses() {
     List<Course> lstCourses = getAllCourse();
     if (lstCourses.isEmpty) {
-      addCourse(Course('Flutter'));
-      addCourse(Course('Web Api'));
-      addCourse(Course('Dart'));
-      addCourse(Course('Java'));
-      addCourse(Course('Python'));
+      addCourse(Course(1, 'Flutter'));
+      addCourse(Course(2, 'Web Api'));
+      // addCourse(Course('Flutter'));
+      // addCourse(Course('Web Api'));
+      // addCourse(Course('Dart'));
+      // addCourse(Course('Java'));
+      // addCourse(Course('Python'));
     }
   }
 

@@ -168,10 +168,9 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Batch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              batchId:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
+                  .vTableGet(buffer, rootOffset, 6, ''));
           InternalToManyAccess.setRelInfo(
               object.student,
               store,
@@ -204,10 +203,9 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Course(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              courseId:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
+                  .vTableGet(buffer, rootOffset, 6, ''));
           InternalToManyAccess.setRelInfo(
               object.student,
               store,
@@ -244,6 +242,7 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Student(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               const fb.StringReader(asciiOptimization: true)
@@ -251,9 +250,7 @@ ModelDefinition getObjectBoxModel() {
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 14, ''),
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, ''),
-              stdId:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
+                  .vTableGet(buffer, rootOffset, 16, ''));
           object.batch.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           object.batch.attach(store);
