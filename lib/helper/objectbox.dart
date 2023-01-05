@@ -17,8 +17,8 @@ class ObjectBoxInstance {
     _batch = Box<Batch>(_store);
     _student = Box<Student>(_store);
     _course = Box<Course>(_store);
-    // insertBatches();
-    // insertCourses();
+    insertBatches();
+    insertCourses();
     // checkManyToMany();
   }
 
@@ -83,18 +83,27 @@ class ObjectBoxInstance {
         .student;
   }
 
+  //Get students by coursename
+  List<Student> getStudentByCourseName(String courseName) {
+    return _course
+        .query(Course_.courseName.equals(courseName))
+        .build()
+        .findFirst()!
+        .student;
+  }
+
   /* When app is opened for the first time,
     insert some batches in the database
   */
   void insertBatches() {
     List<Batch> lstBatches = getAllBatch();
     if (lstBatches.isEmpty) {
-      // addBatch(Batch('29-A'));
-      addBatch(Batch(1, '29-A'));
-      addBatch(Batch(2, '29-B'));
-      // addBatch(Batch('29-B'));
-      // addBatch(Batch('28-A'));
-      // addBatch(Batch('28-B'));
+      addBatch(Batch('29-A'));
+      addBatch(Batch('29-B'));
+      addBatch(Batch('28-A'));
+      addBatch(Batch('28-B'));
+      // addBatch(Batch(1, '29-A'));
+      // addBatch(Batch(2, '29-B'));
     }
   }
 
@@ -105,13 +114,13 @@ class ObjectBoxInstance {
   void insertCourses() {
     List<Course> lstCourses = getAllCourse();
     if (lstCourses.isEmpty) {
-      addCourse(Course(1, 'Flutter'));
-      addCourse(Course(2, 'Web Api'));
-      // addCourse(Course('Flutter'));
-      // addCourse(Course('Web Api'));
-      // addCourse(Course('Dart'));
-      // addCourse(Course('Java'));
-      // addCourse(Course('Python'));
+      // addCourse(Course(1, 'Flutter'));
+      // addCourse(Course(2, 'Web Api'));
+      addCourse(Course('Flutter'));
+      addCourse(Course('Web Api'));
+      addCourse(Course('Dart'));
+      addCourse(Course('Java'));
+      addCourse(Course('Python'));
     }
   }
 

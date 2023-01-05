@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:institute_objectbox/screen/bottom_screen/about.dart';
 
 import '../app/theme.dart';
-import 'bottom_screen/add_batch.dart';
+import 'bottom_screen/search_student.dart';
 import 'bottom_screen/home.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
   final List<Widget> _lstScreen = [
     const HomeScreen(),
-    const AddBatchScreen(),
+    const SearchStudentScreen(),
     const AboutScreen(),
   ];
   @override
@@ -32,8 +32,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Add Batch',
+            icon: Icon(Icons.search),
+            label: 'View Student',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.insert_chart),

@@ -30,7 +30,7 @@ class BatchDataSource {
     try {
       return Future.value(objectBoxInstance.getStudentByBatchName(batchName));
     } catch (e) {
-      throw Exception('Error in getting all student');
+      return Future.value([]);
     }
   }
 }

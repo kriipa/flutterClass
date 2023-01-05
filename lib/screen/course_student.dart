@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:institute_objectbox/data_source/local_data_source/batch_data_source.dart';
+import 'package:institute_objectbox/repository/course_repository.dart';
 
-import '../model/student.dart';
+class CourseStudentScreen extends StatefulWidget {
+  const CourseStudentScreen({super.key});
+  static const String route = "courseStudentScreen";
 
-class BatchStudentScreen extends StatefulWidget {
-  const BatchStudentScreen({super.key});
-  static const String route = "batchStudentScreen";
   @override
-  State<BatchStudentScreen> createState() => _BatchStudentScreenState();
+  State<CourseStudentScreen> createState() => _CourseStudentScreenState();
 }
 
-class _BatchStudentScreenState extends State<BatchStudentScreen> {
-  String batchName = '';
+class _CourseStudentScreenState extends State<CourseStudentScreen> {
+  String courseName = '';
 
-  final List<Student> _lstStudents = [];
   @override
   void didChangeDependencies() {
-    batchName = ModalRoute.of(context)!.settings.arguments as String;
+    courseName = ModalRoute.of(context)!.settings.arguments as String;
     super.didChangeDependencies();
   }
 
@@ -24,21 +22,20 @@ class _BatchStudentScreenState extends State<BatchStudentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Students in $batchName'),
+        title: Text('Students in $courseName'),
       ),
       body: FutureBuilder(
-        future: BatchDataSource().getStudentByBatchName(batchName),
+        future: CourseRepositoryImpl().getStudentsInEachCourse(courseName),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            _lstStudents.clear();
-            _lstStudents.addAll(snapshot.data!);
+            final lstStudents = snapshot.data!;
             return ListView.builder(
-              itemCount: _lstStudents.length,
+              itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(_lstStudents[index].fname),
+                  title: Text(lstStudents[index].fname),
                   subtitle: Text(
-                      _lstStudents[index].batch.target!.batchName.toString()),
+                      lstStudents[index].batch.target!.batchName.toString()),
                   trailing: Wrap(
                     children: [
                       IconButton(
@@ -48,7 +45,7 @@ class _BatchStudentScreenState extends State<BatchStudentScreen> {
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            _lstStudents.removeAt(index);
+                            lstStudents.removeAt(index);
                           });
                         },
                         icon: const Icon(Icons.delete),

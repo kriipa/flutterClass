@@ -25,13 +25,11 @@ class LoadFromJsonDataSource {
       String lname = items['lname'];
       String username = items['username'];
       String password = items['password'];
-      Student student = Student(stdId, fname, lname, username, password);
-      Batch batch =
-          Batch(items['batch']['batchId'] as int, items['batch']['batchName']);
+      Student student = Student(fname, lname, username, password);
+      Batch batch = Batch(items['batch']['batchName']);
       student.batch.target = batch;
       for (var course in items['course']) {
-        Course courseObj =
-            Course(course['courseId'] as int, course['courseName']);
+        Course courseObj = Course(course['courseName']);
         student.course.add(courseObj);
       }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:institute_objectbox/repository/course_repository.dart';
 import 'package:institute_objectbox/screen/batch_student.dart';
+import 'package:institute_objectbox/screen/course_student.dart';
 
 import '../../app/theme.dart';
 import '../../data_source/local_data_source/batch_data_source.dart';
@@ -84,7 +85,7 @@ class DisplayCourses extends StatelessWidget {
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          BatchStudentScreen.route,
+                          CourseStudentScreen.route,
                           arguments: course.courseName,
                         );
                       },

@@ -11,7 +11,7 @@ class Course {
   @Backlink()
   final student = ToMany<Student>();
 
-  // Course(this.courseName, {this.courseId = 0});
+  Course(this.courseName, {this.courseId = 0});
 
-  Course(this.courseId, this.courseName);
+  // Course(this.courseId, this.courseName);
 }

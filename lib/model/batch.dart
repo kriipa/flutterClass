@@ -13,6 +13,6 @@ class Batch {
   final student = ToMany<Student>();
 
   //Constructor
-  // Batch(this.batchName, {this.batchId = 0});
-  Batch(this.batchId, this.batchName);
+  Batch(this.batchName, {this.batchId = 0});
+  // Batch(this.batchId, this.batchName);
 }

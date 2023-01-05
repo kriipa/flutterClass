@@ -4,18 +4,18 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:6586612945106516505",
-      "lastPropertyId": "2:5854317376076735603",
+      "id": "1:8419804526322657979",
+      "lastPropertyId": "2:6233298203541925156",
       "name": "Batch",
       "properties": [
         {
-          "id": "1:4798991356390019797",
+          "id": "1:7321409485443974781",
           "name": "batchId",
           "type": 6,
           "flags": 129
         },
         {
-          "id": "2:5854317376076735603",
+          "id": "2:6233298203541925156",
           "name": "batchName",
           "type": 9
         }
@@ -23,18 +23,18 @@
       "relations": []
     },
     {
-      "id": "2:5048566223041025778",
-      "lastPropertyId": "2:3039436276079246270",
+      "id": "2:2169487252831013509",
+      "lastPropertyId": "2:1685618379912061174",
       "name": "Course",
       "properties": [
         {
-          "id": "1:4526431414428327227",
+          "id": "1:5698123863442967758",
           "name": "courseId",
           "type": 6,
           "flags": 129
         },
         {
-          "id": "2:3039436276079246270",
+          "id": "2:1685618379912061174",
           "name": "courseName",
           "type": 9
         }
@@ -42,69 +42,63 @@
       "relations": []
     },
     {
-      "id": "3:8308014377577410811",
-      "lastPropertyId": "8:9129848586328840050",
+      "id": "3:6307032206390682196",
+      "lastPropertyId": "6:4304255777983792343",
       "name": "Student",
       "properties": [
         {
-          "id": "1:7335673046637371233",
+          "id": "1:4558028924071507768",
           "name": "stdId",
           "type": 6,
           "flags": 129
         },
         {
-          "id": "2:1017982578971162734",
+          "id": "2:1742091260530118657",
           "name": "fname",
           "type": 9
         },
         {
-          "id": "5:1788384995854387469",
-          "name": "batchId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "1:2454483955128625537",
-          "relationTarget": "Batch"
+          "id": "3:3140672216696159271",
+          "name": "lname",
+          "type": 9
         },
         {
-          "id": "6:661705139965883307",
+          "id": "4:5134884309320797536",
           "name": "username",
           "type": 9
         },
         {
-          "id": "7:4680063683494606114",
+          "id": "5:4096527399401443975",
           "name": "password",
           "type": 9
         },
         {
-          "id": "8:9129848586328840050",
-          "name": "lname",
-          "type": 9
+          "id": "6:4304255777983792343",
+          "name": "batchId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:8925704263845387001",
+          "relationTarget": "Batch"
         }
       ],
       "relations": [
         {
-          "id": "3:538160186850696982",
+          "id": "1:5989023108779706438",
           "name": "course",
-          "targetId": "2:5048566223041025778"
+          "targetId": "2:2169487252831013509"
         }
       ]
     }
   ],
-  "lastEntityId": "3:8308014377577410811",
-  "lastIndexId": "1:2454483955128625537",
-  "lastRelationId": "3:538160186850696982",
+  "lastEntityId": "3:6307032206390682196",
+  "lastIndexId": "1:8925704263845387001",
+  "lastRelationId": "1:5989023108779706438",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [
-    8567610968010343169,
-    771798994406263750
-  ],
-  "retiredRelationUids": [
-    3496613033538932246,
-    5275283626452299021
-  ],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
   "version": 1
 }

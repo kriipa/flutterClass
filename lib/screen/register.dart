@@ -19,63 +19,55 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  List<Batch> _lstBatches = [];
-  List<Course> _lstCourseSelected = [];
-  final List<Course> _lstCourse = [];
-  final _gap = const SizedBox(height: 8);
   Batch? _dropDownValue;
+
+  List<Course> _lstCourseSelected = [];
+
+  final _gap = const SizedBox(height: 8);
 
   final _key = GlobalKey<FormState>();
   final _fnameController = TextEditingController(text: 'Kiran');
   final _lnameController = TextEditingController(text: 'Rana');
   final _usernameController = TextEditingController(text: 'kiran');
   final _passwordController = TextEditingController(text: 'kiran123');
+  // // Get the batch object from the list of batches
+  // final batch = _lstBatches
+  //     .firstWhere((element) => element.batchName == _dropDownValue);
 
-  @override
-  void initState() {
-    _getBatches();
-    super.initState();
-  }
-
-  _getBatches() async {
-    _lstBatches = await BatchRepositoryImpl().getAllBatch();
-  }
+  // student.batch.targetId = batch.batchId;
+  // Insert all the course instance in Student Box
 
   _saveStudent() async {
     Student student = Student(
-      1,
       _fnameController.text,
       _lnameController.text,
       _usernameController.text,
       _passwordController.text,
     );
 
-    // // Get the batch object from the list of batches
-    // final batch = _lstBatches
-    //     .firstWhere((element) => element.batchName == _dropDownValue);
-
-    // student.batch.targetId = batch.batchId;
+    //student.batch.targetId = _dropDownValue!.batchId;
     student.batch.target = _dropDownValue;
 
-    // Insert all the course instance in Student Box
-    for (Course c in _lstCourseSelected) {
-      student.course.add(c);
-    }
+    // Add course
+    // for (Course c in _lstCourseSelected) {
+    //   student.course.add(c);
+    // }
+    // OR
+    student.course.addAll(_lstCourseSelected);
 
     int status = await StudentRepositoryImpl().addStudent(student);
-    _showStudentCourse();
     _showMessage(status);
   }
 
-  _showStudentCourse() async {
-    List<Student> lstStudent = await StudentRepositoryImpl().getStudents();
-    for (Student s in lstStudent) {
-      debugPrint(s.fname);
-      for (Course c in s.course) {
-        debugPrint(c.courseName);
-      }
-    }
-  }
+  // _showStudentCourse() async {
+  //   List<Student> lstStudent = await StudentRepositoryImpl().getStudents();
+  //   for (Student s in lstStudent) {
+  //     debugPrint(s.fname);
+  //     for (Course c in s.course) {
+  //       debugPrint(c.courseName);
+  //     }
+  //   }
+  // }
 
   _showMessage(int status) {
     if (status > 0) {

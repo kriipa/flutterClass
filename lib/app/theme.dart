@@ -13,6 +13,9 @@ ThemeData getApplicationThemeData() {
       buttonColor: HexColor.fromHex("#ED9728"),
       splashColor: HexColor.fromHex("#B3ED9728"),
     ),
+    // progressIndicatorTheme: ProgressIndicatorThemeData(
+    //   color: HexColor.fromHex("#ED9728"),
+    // ),
     appBarTheme: AppBarTheme(
       centerTitle: true,
       color: HexColor.fromHex("#ED9728"),
