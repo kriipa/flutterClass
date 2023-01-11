@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:institute_objectbox/app/user_permission.dart';
 import 'package:institute_objectbox/screen/bottom_screen/about.dart';
 
 import '../app/theme.dart';
@@ -15,6 +16,17 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+
+  @override
+  void initState() { 
+    super.initState();
+    checkPermission();
+  }
+
+  checkPermission() async{
+    await UserPermission.checkCameraPermission();
+  }
+
   int _selectedIndex = 0;
   final List<Widget> _lstScreen = [
     const HomeScreen(),

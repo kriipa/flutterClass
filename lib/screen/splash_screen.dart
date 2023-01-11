@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:institute_objectbox/screen/dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login.dart';
 
@@ -12,12 +14,32 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String data = '';
+
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, LoginScreen.route);
-    });
+    _getDataFromSharedPref();
     super.initState();
+  }
+
+  _getDataFromSharedPref() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? username = prefs.getString('username');
+    if (username != null) {
+      setState(() {
+        data = username;
+        Future.delayed(const Duration(seconds: 3), () {
+          Navigator.pushReplacementNamed(context, DashboardScreen.route);
+        });
+      });
+    } else {
+      setState(() {
+        data = 'No Data Found';
+        Future.delayed(const Duration(seconds: 3), () {
+          Navigator.pushReplacementNamed(context, LoginScreen.route);
+        });
+      });
+    }
   }
 
   @override

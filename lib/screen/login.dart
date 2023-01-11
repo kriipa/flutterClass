@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:institute_objectbox/repository/student_repo.dart';
 import 'package:institute_objectbox/screen/register.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dashboard.dart';
 
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final student = await StudentRepositoryImpl()
         .loginStudent(_usernameController.text, _passwordController.text);
     if (student != null) {
+      _setDataToSharedPref(_usernameController.text,_passwordController.text);
       _goToAnotherPage();
     } else {
       _showMessage();
@@ -32,11 +34,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _goToAnotherPage() {
     Navigator.pushNamed(context, DashboardScreen.route);
-  }
+  } 
 
   _showMessage() {
     MotionToast.error(description: const Text('Invalid username or password'))
         .show(context);
+  }
+
+  _setDataToSharedPref(String username, String password) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username', username);
+      await prefs.setString('password', password);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -125,6 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       //   ),
                       // ),
                       onPressed: () {
+                        // SharedPreferences;
                         Navigator.pushNamed(context, RegisterScreen.route);
                       },
                       child: const SizedBox(

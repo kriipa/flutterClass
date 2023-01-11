@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:institute_objectbox/model/course.dart';
 import 'package:institute_objectbox/model/student.dart';
 import 'package:institute_objectbox/repository/batch_repo.dart';
@@ -80,6 +83,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  File? _img;
+
+  Future _loadImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(() {
+          _img = File(image.path);
+        });
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint('Failed to pick Image $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +114,76 @@ class _RegisterScreenState extends State<RegisterScreen> {
               key: _key,
               child: Column(
                 children: [
+                  // SizedBox(
+                  //   // backgroundColor : Colors.amber,
+                  //   height: 200,
+                  //   width: 200,
+                  //   child: img == null
+                  //     ? Image.asset('assets/images/images.png')
+                  //     : Image.file(img!),
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     ElevatedButton(
+                  //         onPressed: () {
+                  //           _loadImage(ImageSource.camera);
+                  //         },
+                  //         child: Wrap(children: const [Text('Open Camera')]),
+                  //     ),
+                  //     ElevatedButton(
+                  //         onPressed: () {
+                  //           _loadImage(ImageSource.gallery);
+                  //         },
+                  //         child: const Text('Open Gallery'),
+                  //     ),
+                  //   ],
+                  // ),
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        backgroundColor: Colors.grey[300],
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
+                        builder: (context) => Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  _loadImage(ImageSource.camera);
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(Icons.camera),
+                                label: const Text('Camera'),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  _loadImage(ImageSource.gallery);
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(Icons.image),
+                                label: const Text('Gallery'),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: _img == null
+                          ? Image.asset('assets/images/images.png')
+                          : Image.file(_img!,fit: BoxFit.cover,),
+                    ),
+                  ),
                   TextFormField(
                     controller: _fnameController,
                     decoration: const InputDecoration(

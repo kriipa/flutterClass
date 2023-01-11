@@ -1,7 +1,10 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:institute_objectbox/app/app.dart';
 import 'package:institute_objectbox/state/objectbox_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'helper/objectbox.dart';
 
 void main() async {
